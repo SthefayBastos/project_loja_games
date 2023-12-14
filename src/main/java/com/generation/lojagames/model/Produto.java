@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 
@@ -18,7 +20,7 @@ public class Produto {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+	
 	@Column(length = 100)
 	@NotBlank(message = "O nome é obrigatório!")
     private String nome;
@@ -29,10 +31,13 @@ public class Produto {
     
 	@NotBlank(message = "O preço obrigatório!")
 	private double preco;
-	
-    private String categoria;
+
+	@ManyToOne
+	@JoinColumn(name = "categoria_id")
+	private Categoria categoria;
     
     private String console;
+    
 	
     public Long getId() {
 		return id;
@@ -58,12 +63,7 @@ public class Produto {
 	public void setPreco(double preco) {
 		this.preco = preco;
 	}
-	public String getCategoria() {
-		return categoria;
-	}
-	public void setCategoria(String categoria) {
-		this.categoria = categoria;
-	}
+	
 	public String getConsole() {
 		return console;
 	}
