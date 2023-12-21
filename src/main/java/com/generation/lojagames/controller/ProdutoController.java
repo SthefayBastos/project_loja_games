@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.generation.lojagames.model.Produto;
+import com.generation.lojagames.repository.CategoriaRepository;
 import com.generation.lojagames.repository.ProdutoRepository;
 
 import jakarta.validation.Valid;
@@ -28,9 +29,11 @@ import jakarta.validation.Valid;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 
 public class ProdutoController {
+	
 	@Autowired
 	private ProdutoRepository produtoRepository;
-
+	
+	
 	@GetMapping
 	public ResponseEntity<List<Produto>> getAll() {
 		return ResponseEntity.ok(produtoRepository.findAll());
@@ -63,6 +66,16 @@ public class ProdutoController {
 		
 		// UPDATE tb_produto SET produto = ?,  descricao = ? WHERE id = ?;
 	}
+	@GetMapping("/maior-que/{preco}")
+    public List<Produto> listarProdutosMaiorQue(@PathVariable Double preco) {
+        return produtoRepository.findByPrecoGreaterThan(preco);
+    }
+
+    @GetMapping("/menor-que/{preco}")
+    public List<Produto> listarProdutosMenorQue(@PathVariable Double preco) {
+        return produtoRepository.findByPrecoLessThan(preco);
+    }
+	
 	
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)

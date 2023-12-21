@@ -9,4 +9,7 @@ import com.generation.lojagames.model.Produto;
 
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 	List <Produto>	findAllByNomeContainingIgnoreCase(@Param("nome")String nome);
+	List <Produto> findByPrecoLessThan( Double preco);
+	List <Produto> findByPrecoGreaterThan( Double preco);
+
 }
